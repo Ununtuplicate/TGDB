@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.shortcuts import render, get_object_or_404, get_list_or_404, reverse, redirect
+from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect, HttpResponsePermanentRedirect
 from .models import Author, Tag, Category, Post
 
 def index(request):
