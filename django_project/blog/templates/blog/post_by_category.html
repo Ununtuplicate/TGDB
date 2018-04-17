@@ -13,7 +13,7 @@
             
     {% for post in posts %}
         <h3>
-            <a href="{% url 'post_detail' post.id %}">{{ post.title|capfirst }}</a>    
+            <a href="{{ post.get_absolute_url }}">{{ post.title|capfirst }}</a>    
         </h3>
         <p class="post-info">
             {% include 'blog/post_info.html' %}
