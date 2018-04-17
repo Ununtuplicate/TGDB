@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Title of app{% endblock %}</title>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="section-inner clearfix">
+            <nav>
+                <a href="/">Name of app</a>
+                <a href="#">app</a>
+                <a href="#">contact</a>
+                <a href="#">about</a>
+            </nav>
+        </div>
+    </div>
+    
+    {% block content %}
+    
+    {% endblock %}
+    
+    {% block footer %}
+    
+    <div class="footer">
+        <div class="section-inner clearfix">
+            <hr>
+            <p>&copy; Name of app</p>
+        </div>
+    </div>
+    
+    {% endblock %}
+    
+</body>
+</html>
