@@ -137,7 +137,7 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 ADMINS = [
-    ('Djangotesting', 'fortestingdjango@gmail.com')
+    ('Djangotesting', 'fortestingdjango@gmail.com'),
 ]
 
 MANAGERS = ADMINS
