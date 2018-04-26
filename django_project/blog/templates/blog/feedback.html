@@ -17,33 +17,33 @@
             {% csrf_token %}
             <table>
                 <tr>
-                    <td><label for="id_name">Name</label></td>
+                    <td>{{ form.name.label_tag }}</td>
                     <td>
                         {{ form.name.errors }}
-                        {% if form.name.value %}
-                            <input type="text" id="id_name" name="name" value="{{ form.name.value }}">                   
-                        {% else %}
-                            <input type="text" id="id_name" name="name">
-                        {% endif %}
+                        {{ form.name }}
+                        {{ form.name.help_text }}
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="id_name">Email</label></td>
+                    <td>{{ form.email.label_tag }}</td>
                     <td>
                         {{ form.email.errors }}
-                        <input type="email" id="id_email" name="email"></td>  
+                        {{ form.email }}
+                    </td>  
                 </tr>
                 <tr>
-                    <td><label for="id_name">Subject</label></td>
+                    <td>{{ form.subject.label_tag }}</td>
                     <td>
                         {{ form.subject.errors }}
-                        <input type="text" id="id_subject" name="subject"></td>      
+                        {{ form.subject }}
+                    </td>      
                 </tr>
                 <tr>
-                    <td><label for="id_name">Message</label></td>
+                    <td>{{ form.message.label_tag }}</td>
                     <td>
                         {{ form.message.errors }}
-                        <textarea type="id_message" cols="50" rows="10" name="message"></textarea></td>                   
+                        {{ form.message }}
+                    </td>                   
                 </tr>
                 <tr>
                     <td></td>
