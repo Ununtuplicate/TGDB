@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from blog.forms import PostForm
 
+
 # Create your views here.
 
 

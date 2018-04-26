@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, reverse, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect, HttpResponsePermanentRedirect
 from .models import Author, Tag, Category, Post
+from django.contrib import messages
+from .forms import FeedbackForm
 
 def index(request):
     return HttpResonse("Hello Django")
@@ -35,3 +37,14 @@ def post_by_tag(request, tag_slug):
         'posts': posts
     }
     return render(request, 'blog/post_by_tag.html', context)
+
+def feedback(request):
+    if request.method == "POST":
+        f = FeedbackForm(request.POST)
+        if f.is_valid():
+            f.save()
+            messages.add_message(request, messages.INFO, 'Feedback Submitted.')
+            return redirect('feedback')
+    else:
+        f = FeedbackForm()
+    return render(request, 'blog/feedback.html', {'form': f})
