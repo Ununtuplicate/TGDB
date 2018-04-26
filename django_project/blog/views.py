@@ -4,6 +4,8 @@ from .models import Author, Tag, Category, Post
 from django.contrib import messages
 from .forms import FeedbackForm
 from django.core.mail import mail_admins
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django_project import helpers
 
 def index(request):
     return HttpResonse("Hello Django")
@@ -55,3 +57,9 @@ def feedback(request):
     else:
         f = FeedbackForm()
     return render(request, 'blog/feedback.html', {'form': f})
+
+# view function to display a list of posts
+def post_list(request):
+    posts = Post.objects.order_by("-id").all()
+    posts = helpers.pg_records(request, posts, 5)
+    return render(request, 'blog/post_list.html', {'posts': posts})
