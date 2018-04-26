@@ -11,40 +11,39 @@
     
         <h3>Submit your feedback</h3>
         
-        {% if form.non_field_errors %}
-        <ul>
-            {% for error in form.non_field_errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+        {{ form.non_field_errors }}
         
         <form action="" method="post">
             {% csrf_token %}
             <table>
                 <tr>
-                    <td></td>
-                    {% if form.name.errors %}
-                        {% for error in form.name.errors %}
-                            <td>{{ error }}</td>
-                        {% endfor %}
-                    {% endif %}
-                </tr>
-                <tr>
                     <td><label for="id_name">Name</label></td>
-                    <td><input type="text" id="id_name" name="name"></td>                   
+                    <td>
+                        {{ form.name.errors }}
+                        {% if form.name.value %}
+                            <input type="text" id="id_name" name="name" value="{{ form.name.value }}">                   
+                        {% else %}
+                            <input type="text" id="id_name" name="name">
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <td><label for="id_name">Email</label></td>
-                    <td><input type="email" id="id_email" name="email"></td>  
+                    <td>
+                        {{ form.email.errors }}
+                        <input type="email" id="id_email" name="email"></td>  
                 </tr>
                 <tr>
                     <td><label for="id_name">Subject</label></td>
-                    <td><input type="text" id="id_subject" name="subject"></td>      
+                    <td>
+                        {{ form.subject.errors }}
+                        <input type="text" id="id_subject" name="subject"></td>      
                 </tr>
                 <tr>
                     <td><label for="id_name">Message</label></td>
-                    <td><textarea type="id_message" cols="50" rows="10" name="message"></textarea></td>                   
+                    <td>
+                        {{ form.message.errors }}
+                        <textarea type="id_message" cols="50" rows="10" name="message"></textarea></td>                   
                 </tr>
                 <tr>
                     <td></td>
