@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from blog.forms import PostForm
+from blog.models import Post, Author, Category, Tag
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -26,3 +29,16 @@ def post_add(request):
     else:
         f = PostForm()
     return render(request, 'cadmin/post_add.html', {'form': f})
+
+@login_required
+def home(request):
+#    if not request.user.is_authenticated:
+#        return redirect('login')
+    
+    return render(request, 'cadmin/admin_page.html')
+
+def login(request, **kwargs):
+    if request.user.is_authenticated:
+        return redirect('/cadmin/')
+    else:
+        return auth_views.login(request, **kwargs)

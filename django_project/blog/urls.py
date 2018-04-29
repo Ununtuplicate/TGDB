@@ -2,6 +2,9 @@ from django.urls import path, re_path, include
 from . import views
 
 urlpatterns = [
+    path('login/', views.login, name="blog_login"),
+    path('logout/', views.logout, name="blog_logout"),
+    path('admin_page/', views.admin_page, name="admin_page"),
     path('save-session-data/', views.save_session_data, name="save_session_data"),
     path('access-session-data/', views.access_session_data, name="access_session_data"),
     path('delete-session-data/', views.delete_session_data, name="delete_session_data"),

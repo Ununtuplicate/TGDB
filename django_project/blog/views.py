@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, reverse, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect, HttpResponsePermanentRedirect
 from .models import Author, Tag, Category, Post
-from django.contrib import messages
+from django.contrib import messages, auth
 from .forms import FeedbackForm
 from django.core.mail import mail_admins
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -110,3 +110,33 @@ def delete_session_data(request):
         pass
     
     return HttpResponse("Session Data Cleared")
+
+def login(request):
+    if request.user.is_authenticated:
+        return redirect('admin_page')
+    
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = auth.authenticate(username=username, password=password)
+        
+        if user is not None:
+            # correct username and password login the user
+            auth.login(request, user)
+            return redirect('admin_page')
+        
+        else:
+            messages.error(request, 'Error wrong username or password')
+            
+    return render(request, 'blog/login.html')
+
+def logout(request):
+    auth.logout(request)
+    return render(request, 'blog/logout.html')
+
+def admin_page(request):
+    if not request.user.is_authenticated:
+        return redirect('blog_login')
+    
+    return render(request, 'blog/admin_page.html')
+
