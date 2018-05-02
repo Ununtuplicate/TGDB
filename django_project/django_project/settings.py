@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.flatpages',
+    'django.contrib.sites',
     'blog',
-    'cadmin'
+    'cadmin',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +151,9 @@ ADMINS = [
 ]
 
 MANAGERS = ADMINS
+
+#######
+
+LOGIN_URL = 'login'
+
+SITE_ID = 1
