@@ -3,6 +3,9 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    re_path('post/update/(?P<pk>[\d]+)/', views.post_update, name='post_update'),
+    re_path('post/delete/(?P<pk>[\d]+)/', views.post_delete, name='post_delete'),
+    path('category/', views.category_list, name='category_list'),
     path('activate/account/', views.activate_account, name='activate'),
     path('register/', views.register, name='register'),
     path('password-change-done/',
@@ -13,7 +16,7 @@ urlpatterns = [
          auth_views.password_change,
          {'template_name': 'cadmin/password_change.html', 'post_change_redirect': 'password_change_done'},
          name='password_change'),
-    path('', views.home, name="home"),
+    path('', views.post_list, name="post_list"),
     path('accounts/login/', views.login, {'template_name': 'cadmin/login.html'}, name='login'),
     path('accounts/logout/', auth_views.logout, {'template_name': 'cadmin/logout.html'}, name='logout'),
     path('post/add/', views.post_add, name='post_add'),

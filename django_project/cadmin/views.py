@@ -13,7 +13,7 @@ from django.conf import settings
 
 # Create your views here.
 
-
+@login_required
 def post_add(request):
     
     # if request is POST, create a bound form (form with data)
@@ -27,14 +27,72 @@ def post_add(request):
         
         # if form is invalid show form with errors
         if f.is_valid():
-            # save data
-            f.save()
+            # if author is not selected and user is superuser, then assign the post to the author named admin 
+            if request.POST.get('author') == "" and request.user.is_superuser:
+                new_post = f.save(commit=False)
+                author = Author.objects.get(user__username='admin')
+                new_post.author = author
+                new_post.save()
+                f.save_m2m()
+                
+            # if author is selected and user is superuser
+            elif request.POST.get('author') and request.user.is_superuser:
+                new_post = f.save()
+                
+            # if user is not a superuser
+            else: 
+                new_post = f.save(commit=False)
+                new_post.author = Author.objects.get(user__username=request.user.username)
+                new_post.save()
+                f.save_m2m()
+                
+            messages.add_message(request, messages.INFO, 'Post Added')
             return redirect('post_add')
         
     # if request is GET then show unbound form to user
     else:
         f = PostForm()
     return render(request, 'cadmin/post_add.html', {'form': f})
+
+@login_required
+def post_update(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    
+    # if request is POST, create a bound form (form with data)
+    if request.method == "POST":
+        f = PostForm(request.POST, instance=post)
+        
+        # check whether form is valid or not
+        # if the form is valid, save the data to the database
+        # and redirect the user back to the update post form
+        
+        # if form is invalid show form with errors again
+        if f.is_valid():
+            # if author is not selected and user is superuser, then assign post to author named admin
+            if request.POST.get('author') == "" and request.user.is_superuser:
+                updated_post = f.save(commit=False)
+                author = Author.objects.get(user__username="admin")
+                updated_post.author = author
+                updated_post.save()
+                f.save_m2m()
+            # if author is selected and user is superuser
+            elif request.POST.get('author') and request.user.is_superuser:
+                updated_post = f.save()
+            # if user is not a superuser
+            else:
+                updated_post = f.save(commit=False)
+                updated_post.author = Author.objects.get(user__username=request.user.username)
+                updated_post.save()
+                f.save_m2m()
+                
+            messages.add_message(request, messages>INFO, 'Post updated')
+            return redirect(reverse('post_update', args=[post.id]))
+        
+    # if request is GET show unbound form to the user
+    else:
+        f = PostForm(instance=post)
+            
+    return render(request, 'cadmin/post_update.html', {'form': f, 'post': post})
 
 @login_required
 def home(request):
@@ -107,3 +165,33 @@ def activate_account(request):
     r.save()
     
     return render(request, 'cadmin/activated.html')
+
+@login_required
+def post_list(request):
+    if request.user.is_superuser:
+        posts = Post.objects.order_by("-id").all()
+    else:
+        posts = Post.objects.filter(author__user__username=request.user.username).order_by("-id")
+        
+    posts = helpers.pg_records(request, posts, 5)
+    
+    return render(request, 'cadmin/post_list.html', {'posts': posts})
+
+@login_required
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    next_page = request.GET['next']
+    messages.add_message(request, messages.INFO, 'Post deleted')
+    return redirect(next_page)
+
+@login_required
+def category_list(request):
+    if request.user.is_superuser:
+        categories = Category.objects.order_by("-id").all()
+    else:
+        categories = Category.objects.filter(author__user__username=request.user.username).order_by("-id")
+        
+    categories = helpers.pg_records(request, categories, 5)
+    
+    return render(request, 'cadmin/category_list.html', {'categories': categories})

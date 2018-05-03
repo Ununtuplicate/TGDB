@@ -59,6 +59,7 @@ class CategoryForm(forms.ModelForm):
         return self.cleaned_data['slug'].lower()
     
 class PostForm(forms.ModelForm):
+    author = forms.ModelChoiceField(queryset=Author.objects.all(), required=False)
     
     class Meta:
         model = Post
