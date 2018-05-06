@@ -29,6 +29,7 @@ class AuthorForm(forms.ModelForm):
         return new_author
     
 class TagForm(forms.ModelForm):
+    author = forms.ModelChoiceField(queryset=Author.objects.all(), required=False)
     
     class Meta:
         model = Tag
@@ -44,6 +45,7 @@ class TagForm(forms.ModelForm):
         return self.cleaned_data['slug'].lower()
         
 class CategoryForm(forms.ModelForm):
+    author = forms.ModelChoiceField(queryset=Author.objects.all(), required=False)
     
     class Meta:
         model = Category

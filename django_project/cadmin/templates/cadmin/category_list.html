@@ -43,7 +43,14 @@
                         
                     {% if forloop.last %}
                         
-                    </table>
+                        </table>
+                    {% endif %}
+        
+            {% empty %}
+                No Posts  
+            {% endfor %}
+        
+        
     </div>
 
     {% if categories %}
