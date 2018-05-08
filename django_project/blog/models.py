@@ -2,6 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.contrib.auth.models import User
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
@@ -46,7 +47,7 @@ class Post(models.Model):
     title = models.CharField(max_length=50)
     slug = models.SlugField(unique = True,
                             help_text="Slug will automatically be generated using the title of your post")
-    content = models.TextField()
+    content = RichTextUploadingField()
     pub_date = models.DateTimeField(auto_now_add = True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

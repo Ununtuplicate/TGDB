@@ -24,6 +24,7 @@
         
         <form action="" method="post">
             {% csrf_token %}
+            {{ form.media }}
             <table>
                 <tr>
                     <td>{{ form.title.label_tag }}</td>

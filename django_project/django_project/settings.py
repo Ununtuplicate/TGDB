@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'ckeditor',
+    'ckeditor_uploader',
     'blog',
     'cadmin',
 ]
@@ -158,3 +160,20 @@ MANAGERS = ADMINS
 LOGIN_URL = 'login'
 
 SITE_ID = 1
+
+######################
+## CKEDITOR CONFIGURATION ##
+######################
+
+CKEDITOR_JQEURY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,
+    },
+}
+
+#####################
